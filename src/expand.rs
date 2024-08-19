@@ -6,6 +6,8 @@ use crate::parser::{
     token::Token,
 };
 
+/// Expands the template file into a function that can be used to render the template
+/// this function is used by the `create_component` and `create_entypoint` proc_macros
 pub fn expand_template(path: String) -> TokenStream {
     let template_path_opt = if path.is_empty() {
         None
@@ -23,6 +25,7 @@ pub fn expand_template(path: String) -> TokenStream {
 
     let root: Node = parser.try_into().unwrap();
 
+    /// Converts the children of a node into code
     fn convert_children(code: &mut String, node: &Node) {
         match &node.node_type {
             NodeType::Tag(tag) => {

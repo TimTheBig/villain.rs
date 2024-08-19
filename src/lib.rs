@@ -26,6 +26,15 @@ pub fn create_component(item: TokenStream) -> TokenStream {
     expand::expand_template(item.to_string())
 }
 
+/// Creates an entrypoint for the application using the specified `.vue` template file
+/// 
+/// ```
+/// use villain::create_entypoint;
+/// 
+/// fn main() {
+///    println!("{:?}", create_entypoint!("src/App.vue"));
+/// }
+/// ```
 #[proc_macro]
 pub fn create_entypoint(item: TokenStream) -> TokenStream {
     expand::expand_template(item.to_string())

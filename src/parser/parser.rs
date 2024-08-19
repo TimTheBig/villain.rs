@@ -14,6 +14,7 @@ pub(crate) enum ParserError {
     UnmatchingClosing(String, String),
 }
 
+/// Represents the type of a node in the HTML Syntax Tree
 #[derive(Debug, PartialEq)]
 pub(crate) enum NodeType {
     Root,
@@ -23,6 +24,7 @@ pub(crate) enum NodeType {
     Attribute(String, Option<Token>, bool),
 }
 
+/// Represents a node in the HTML Syntax Tree
 #[derive(Debug, PartialEq)]
 pub(crate) struct Node {
     pub(crate) node_type: NodeType,
@@ -37,11 +39,13 @@ impl Node {
         }
     }
 
+    /// Adds a child node to the current node
     pub(crate) fn add_child(&mut self, node: Node) {
         self.children.push(node);
     }
 }
 
+/// Represents the HTML Syntax Tree as a vector of syntax tokens
 pub(crate) struct Parser {
     tokens: Vec<Token>,
 }
@@ -60,6 +64,7 @@ impl Parser {
         self.tokens.pop()
     }
 
+    /// Expects the next token to be of the specified `TokenType`
     fn expect(&mut self, token_type: TokenType) -> Result<Token, ParserError> {
         if let Some(token) = self.next() {
             if token.token_type == token_type {
@@ -72,6 +77,7 @@ impl Parser {
         }
     }
 
+    /// Takes the next token if it is present and has the specified type
     fn take_if_present(&mut self, token_type: TokenType) -> Result<Option<Token>, ParserError> {
         if let Some(token) = self.peek() {
             if token.token_type == token_type {
